@@ -1,0 +1,303 @@
+<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0" TenantId="axelerob2c.onmicrosoft.com" PolicyId="B2C_1A_TrustFrameworkLocalization" PublicPolicyUri="http://axelerob2c.onmicrosoft.com/B2C_1A_TrustFrameworkLocalization" TenantObjectId="aff048b0-1d48-4d6b-8d6f-2fa2ffc99268">
+  <BasePolicy>
+    <TenantId>axelerob2c.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkBase</PolicyId>
+  </BasePolicy>
+  <BuildingBlocks>
+    <ContentDefinitions>
+      <ContentDefinition Id="api.signuporsignin">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.signuporsignin.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountsignup">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.localaccountsignup.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.selfasserted">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.selfasserted.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountpasswordreset">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.localaccountpasswordreset.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.idpselections">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.idpselections.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountsignin">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.localaccountsignin.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.selfasserted.profileupdate">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.selfasserted.profileupdate.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.phonefactor">
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.phonefactor.en" />
+          <!-- Add more languages here -->
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+    </ContentDefinitions>
+      <DisplayControl Id="captchaControlChallengeCode" UserInterfaceControlType="CaptchaControl" DisplayName="Help us beat the bots">    
+        <InputClaims>
+            <InputClaim ClaimTypeReferenceId="challengeType" />
+            <InputClaim ClaimTypeReferenceId="challengeId" />
+        </InputClaims>
+        <DisplayClaims>
+            <DisplayClaim ClaimTypeReferenceId="challengeType" ControlClaimType="ChallengeType" />
+            <DisplayClaim ClaimTypeReferenceId="challengeId" ControlClaimType="ChallengeId" />
+            <DisplayClaim ClaimTypeReferenceId="challengeString" ControlClaimType="ChallengeString" />
+            <DisplayClaim ClaimTypeReferenceId="captchaEntered" ControlClaimType="CaptchaEntered" />
+        </DisplayClaims>
+        <Actions>
+        <Action Id="GetChallenge">
+            <ValidationClaimsExchange>
+            <ValidationClaimsExchangeTechnicalProfile
+                TechnicalProfileReferenceId="HIP-GetChallenge" />
+            </ValidationClaimsExchange>
+        </Action>
+        <Action Id="VerifyChallenge">
+            <ValidationClaimsExchange>
+            <ValidationClaimsExchangeTechnicalProfile
+                TechnicalProfileReferenceId="HIP-VerifyChallenge" />
+            </ValidationClaimsExchange>
+        </Action>
+        </Actions>
+      </DisplayControl>
+    <Localization Enabled="true">
+      <SupportedLanguages DefaultLanguage="en" MergeBehavior="Append">
+        <SupportedLanguage>en</SupportedLanguage>
+      </SupportedLanguages>
+      <LocalizedResources Id="api.signuporsignin.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="ClaimType" ElementId="signInName" StringId="DisplayName">Email cím</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="heading">Bejelentkezés</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="local_intro_generic">Bejelentkezés ezzel:felhasználó email címe</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="password" StringId="DisplayName">Jelszó</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="requiredField_password">Kérem, adaja meg a jelszavát</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="requiredField_generic">Kérjük, adja meg a {0}</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="invalid_generic">Kérjük, adjon meg egy érvényes {0}</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="createaccount_one_link">Regisztráljon most</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="createaccount_two_links">Regisztráljon a {0} vagy {1}</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="createaccount_three_links">Regisztráljon a {0}, {1}, vagy {2}</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="forgotpassword_link">Elfelejtette a jelszavát?</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_signin">Bejelentkezés</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="createaccount_intro">Nincs fiókja?</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="unknown_error">Gondjaink vannak a bejelentkezéssel. Kérjük, próbálja meg később újra.</LocalizedString>
+          <!-- Uncomment the remember_me only if the keep me signed in is activated. 
+          <LocalizedString ElementType="UxElement" StringId="remember_me">Keep me signed in</LocalizedString> -->
+          <LocalizedString ElementType="ClaimsProvider" StringId="FacebookExchange">Facebook</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="ResourceOwnerFlowInvalidCredentials">A jelszava helytelen.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfInvalidPassword">A jelszava helytelen.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfPasswordExpired">A jelszava lejárt.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimsPrincipalDoesNotExist">Úgy tűnik, nem találjuk a fiókját.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfOldPasswordUsed">Úgy tűnik, egy régi jelszót használtál.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="DefaultMessage">Érvénytelen felhasználónév vagy jelszó.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfUserAccountDisabled">A fiókját zárolták. Lépjen kapcsolatba az ügyfélszolgálattal a feloldás érdekében, majd próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfUserAccountLocked">A fiókját ideiglenesen zároljuk, hogy megakadályozzuk a jogosulatlan használatot. Próbálja meg később újra.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="AADRequestsThrottled">Jelenleg túl sok a kérés. Kérjük, várjon egy kis időt, és próbálja meg újra.</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!--Local account sign-up page English-->
+      <LocalizedResources Id="api.localaccountsignup.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="DisplayName">Email cím</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="UserHelpText">Az Önnel való kapcsolatfelvételhez használható e-mail cím.</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="PatternHelpText">Kérjük, adjon meg egy érvényes e-mail címet.</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="newPassword" StringId="DisplayName">Új jelszó</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="newPassword" StringId="UserHelpText">Új jelszó megadása</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="newPassword" StringId="PatternHelpText">8-16 karakter, amely az alábbiak közül 4-ből 3-at tartalmaz: Kisbetűs karakterek, nagybetűs karakterek, számjegyek. (0-9), és a következő szimbólumok közül egy vagy több: @ # $ % ^ &amp; * - _ + = [ ] { } | \ : ' , ? / ` ~ " ( ) ; .</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="reenterPassword" StringId="DisplayName">Új jelszó megerősítése</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="reenterPassword" StringId="UserHelpText">Új jelszó megerősítése</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="reenterPassword" StringId="PatternHelpText">8-16 karakter, amely az alábbiak közül 4-ből 3-at tartalmaz: Kisbetűs karakterek, nagybetűs karakterek, számjegyek. (0-9), és a következő szimbólumok közül egy vagy több: @ # $ % ^ &amp; * - _ + = [ ] { } | \ : ' , ? / ` ~ " ( ) ; .</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="displayName" StringId="DisplayName">Név</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="displayName" StringId="UserHelpText">Név</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="surname" StringId="DisplayName">Vezetéknév</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="surname" StringId="UserHelpText">Az Ön vezetékneve (más néven családnév vagy vezetéknév).</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="givenName" StringId="DisplayName">Keresztnév</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="givenName" StringId="UserHelpText">Az Ön keresztneve (más néven keresztneve).</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="disclaimer_link_1_text">Felhasználói azonosító szolgáltatás felhasználási feltételek</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="disclaimer_link_1_url">https://axelerob2c.blob.core.windows.net/axlerob2c/TermsOfUSe/Felhasznalo_azonositas_Felhasznalasi_feltetelek_20230926_final.pdf</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="disclaimer_link_2_text">Felhasználói azonosító szolgáltatás adatkezelési útmutató</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="disclaimer_link_2_url">https://axelerob2c.blob.core.windows.net/axlerob2c/TermsOfUSe/Felhasznalo_azonositas_Adatkezelesi_tajekoztato_20231218_final.pdf</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_continue">Létrehozás</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_fieldIncorrect">Egy vagy több mező hibásan van kitöltve. Kérjük, ellenőrizze beírásait, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_passwordEntryMismatch">A jelszó beviteli mezők nem egyeznek. Kérjük, írja be ugyanazt a jelszót mindkét mezőbe, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_requiredFieldMissing">Egy kötelező mező hiányzik. Kérjük, töltse ki az összes kötelező mezőt, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="helplink_text">Mi ez?</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="initial_intro">Kérjük, adja meg a következő adatokat.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="preloader_alt">Kérem várjon</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="required_field">Ez az információ kötelező.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_cancel">Törlés</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_edit">E-mail cím módosítása</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_resend">Új kód küldése</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_send">Ellenőrző kód küldése</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_verify">Ellenőrizze a kódot</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_code_expired">Ez a kód lejárt. Kérjük, kérjen új kódot.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_no_retry">Túl sok hibás kísérletet tettél. Kérjük, próbálja meg később újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_retry">Ez a kód helytelen. Kérjük, próbálja újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_server">Problémáink vannak az e-mail címének ellenőrzésével. Kérjük, adjon meg egy érvényes e-mail címet, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_throttled">Túl sok kérés érkezett az e-mail cím ellenőrzésére. Kérjük, várjon egy kicsit, majd próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_info_msg">Az ellenőrző kódot elküldtük a postaládájába. Kérjük, másolja be az alábbi beviteli mezőbe.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_input">Ellenőrző kód</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_intro_msg">Ellenőrzésre van szükség. Kérjük, kattintson a Küldés gombra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_success_msg">Ellenőrzött e-mail cím. Most már folytathatja.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="ServiceThrottled">Jelenleg túl sok a kérés. Kérjük, várjon egy kis időt, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimNotVerified">Nem ellenőrzött állítás: {0}</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimsPrincipalAlreadyExists">A megadott azonosítóval rendelkező felhasználó már létezik. Kérjük, válasszon egy másikat.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfIncorrectPattern">Helytelen minta: {0}</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfInvalidInput">{0} érvénytelen bemenettel rendelkezik.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfMissingRequiredElement">Hiányzó kötelező elem: {0}</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfValidationError">Hiba az érvényesítésben: {0}</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!-- Self-asserted page English-->
+      <LocalizedResources Id="api.selfasserted.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimsPrincipalAlreadyExists">Ön már regisztrált, kérjük, nyomja meg a vissza gombot, és jelentkezzen be helyette.</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!-- Password reset page English-->
+      <LocalizedResources Id="api.localaccountpasswordreset.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="DisplayName">Email cím</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="UserHelpText">Az Önnel való kapcsolatfelvételhez használható e-mail cím.</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="PatternHelpText">Kérjük, adjon meg egy érvényes e-mail címet.</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="newPassword" StringId="DisplayName">Új jelszó</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="newPassword" StringId="UserHelpText">Új jelszó megadása</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="newPassword" StringId="PatternHelpText">8-16 karakter, amely az alábbiak közül 4-ből 3-at tartalmaz: Kisbetűs karakterek, nagybetűs karakterek, számjegyek. (0-9), és a következő szimbólumok közül egy vagy több: @ # $ % ^ &amp; * - _ + = [ ] { } | \ : ' , ? / ` ~ " ( ) ; .</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="reenterPassword" StringId="DisplayName">Új jelszó megerősítése</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="reenterPassword" StringId="UserHelpText">Új jelszó megerősítése</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="reenterPassword" StringId="PatternHelpText">8-16 karakter, amely az alábbiak közül 4-ből 3-at tartalmaz: Kisbetűs karakterek, nagybetűs karakterek, számjegyek. (0-9), és a következő szimbólumok közül egy vagy több: @ # $ % ^ &amp; * - _ + = [ ] { } | \ : ' , ? / ` ~ " ( ) ; .</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_passwordEntryMismatch">A jelszó beviteli mezők nem egyeznek. Kérjük, írja be ugyanazt a jelszót mindkét mezőbe, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_fieldIncorrect">Egy vagy több mező hibásan van kitöltve. Kérjük, ellenőrizze beírásait, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_continue">Folytatás</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_cancel">Törlés</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimsPrincipalDoesNotExist">A megadott felhasználói azonosítóhoz nem találtunk fiókot.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimsTransformationBooleanValueIsNotEqual">A fiókját zárolták. Lépjen kapcsolatba az ügyfélszolgálattal a feloldás érdekében, majd próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="required_field">Ez az információ kötelező.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_edit">E-mail cím módosítása</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_resend">Új kód küldése</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_send">Ellenőrző kód küldése</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_but_verify">Ellenőrizze a kódot</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_code_expired">Ez a kód lejárt. Kérjük, kérjen új kódot.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_no_retry">Túl sok hibás kísérletet tettél. Kérjük, próbálja meg később újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_retry">Ez a kód helytelen. Kérjük, próbálja újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_server">Problémáink vannak az e-mail címének ellenőrzésével. Kérjük, adjon meg egy érvényes e-mail címet, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_fail_throttled">Túl sok kérés érkezett az e-mail cím ellenőrzésére. Kérjük, várjon egy kicsit, majd próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_info_msg">Az ellenőrző kódot elküldtük a postaládájába. Kérjük, másolja be az alábbi beviteli mezőbe.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_input">Ellenőrző kód</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_intro_msg">Ellenőrzésre van szükség. Kérjük, kattintson a Küldés gombra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="ver_success_msg">Ellenőrzött e-mail cím. Most már folytathatja.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="ServiceThrottled">Jelenleg túl sok a kérés. Kérjük, várjon egy kis időt, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimNotVerified">Nem ellenőrzött állítás: {0}</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimsPrincipalAlreadyExists">A megadott azonosítóval rendelkező felhasználó már létezik. Kérjük, válasszon egy másikat.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfIncorrectPattern">Helytelen minta: {0}</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfInvalidInput">{0} érvénytelen bemenettel rendelkezik.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfMissingRequiredElement">Hiányzó kötelező elem: {0}</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfValidationError">Hiba az érvényesítésben: {0}</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!-- Edit profile sign-in page English-->
+      <LocalizedResources Id="api.idpselections.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="UxElement" StringId="intro">Bejelentkezés</LocalizedString>
+          <LocalizedString ElementType="ClaimsProvider" StringId="LocalAccountSigninEmailExchange">Helyi fiók bejelentkezés</LocalizedString>
+          <LocalizedString ElementType="ClaimsProvider" StringId="FacebookExchange">Facebook</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!-- Edit profile sign-in with local account English-->
+      <LocalizedResources Id="api.localaccountsignin.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="ClaimType" ElementId="signInName" StringId="DisplayName">Email cím</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="password" StringId="DisplayName">Jelszó</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_continue">Folytatás</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_cancel">Törlés</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="ResourceOwnerFlowInvalidCredentials">A jelszava helytelen.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfInvalidPassword">A jelszava helytelen.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfPasswordExpired">Your password has expired.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimsPrincipalDoesNotExist">Úgy tűnik, nem találjuk a fiókját.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfOldPasswordUsed">Úgy tűnik, egy régi jelszót használtál.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="DefaultMessage">Érvénytelen felhasználónév vagy jelszó.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfUserAccountDisabled">A fiókját zárolták. Lépjen kapcsolatba az ügyfélszolgálattal a feloldás érdekében, majd próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfUserAccountLocked">A fiókját ideiglenesen zároljuk, hogy megakadályozzuk a jogosulatlan használatot. Próbálja meg később újra.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="AADRequestsThrottled">Jelenleg túl sok a kérés. Kérjük, várjon egy kis időt, és próbálja meg újra.</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!-- Edit profile page English-->
+      <LocalizedResources Id="api.selfasserted.profileupdate.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="ClaimType" ElementId="displayName" StringId="DisplayName">Megjelenített név</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="displayName" StringId="UserHelpText">A megjelenített név.</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="surname" StringId="DisplayName">Vezetéknév</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="surname" StringId="UserHelpText">Az Ön vezetékneve (más néven családnév vagy vezetéknév).</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="givenName" StringId="DisplayName">Keresztnév</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="givenName" StringId="UserHelpText">Az Ön keresztneve (más néven keresztnév).</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_continue">Folytatás</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_cancel">Törlés</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!-- Phone factor English-->
+      <LocalizedResources Id="api.phonefactor.en">
+        <LocalizedStrings>
+          <LocalizedString ElementType="UxElement" StringId="button_verify">Hívj fel</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="country_code_label">Országkód</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="cancel_message">A felhasználó törölte a többfaktoros hitelesítést</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="text_button_send_second_code">Új kód küldése</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="code_pattern">\d{6}</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_mixed">A következő számot rögzítettük az Ön számára. SMS-ben vagy telefonon küldhetünk egy kódot az Ön hitelesítéséhez.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_mixed_p">A következő számokat tartjuk nyilván az Ön számára. Válasszon egy olyan számot, amelyet felhívhatunk telefonon vagy SMS-ben küldhetünk egy kódot az Ön hitelesítéséhez.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_verify_code">Ellenőrizze a kódot</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="requiredField_code">Kérjük, adja meg a kapott ellenőrző kódot</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="invalid_code">Kérjük, adja meg a kapott 6 számjegyű kódot.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_cancel">Törlés</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="local_number_input_placeholder_text">Telefon szám</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_retry">Újrapróbálkozás</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="alternative_text">Nincs nálam a telefonom</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_phone_p">A következő számokat tartjuk nyilván az Ön számára. Válasszon egy számot, amelyet felhívhatunk az Ön hitelesítéséhez.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_phone">A következő számokat tartjuk nyilván az Ön számára. Válasszon egy számot, amelyet felhívhatunk az Ön hitelesítéséhez.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="enter_code_text_intro">Írja be az alábbi ellenőrző kódot, vagy</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_entry_phone">Adja meg az alábbiakban azt a számot, amelyet felhívhatunk az Ön hitelesítéséhez.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_entry_sms">Adja meg az alábbi számot, hogy SMS-ben küldhessünk egy kódot az Ön hitelesítésére.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="button_send_code">Kód küldése</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="invalid_number">Kérjük, adjon meg egy érvényes telefonszámot</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_sms">A következő számot rögzítettük az Ön számára. SMS-ben küldünk egy kódot az Ön hitelesítésére.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_entry_mixed">Adja meg az alábbi számot, hogy SMS-ben vagy telefonon küldhessünk egy kódot az Ön hitelesítésére.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="number_pattern">^\+(?:[0-9][\x20-]?){6,14}[0-9]$</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="intro_sms_p">A következő számokat tartjuk nyilván az Ön számára. Válasszon egy olyan számot, amelyre SMS-ben kódot tudunk küldeni az Ön hitelesítéséhez.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="requiredField_countryCode">Kérjük, válassza ki az országkódot</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="requiredField_number">Kérjük, adja meg telefonszámát</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="country_code_input_placeholder_text">Ország vagy régió</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="number_label">Telefonszám</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_tryagain">A megadott telefonszám foglalt vagy nem elérhető. Kérjük, ellenőrizze a számot, és próbálja meg újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_sms_throttled">Elérte a szöveges üzenetek számának határát. Próbálja meg rövidesen újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_phone_throttled">Elérte a hívási kísérletek számának határát. Próbálja meg rövidesen újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_throttled">Elérte az ellenőrzési kísérletek számának határát. Próbálja meg rövidesen újra.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_incorrect_code">TAz Ön által megadott ellenőrző kód nem egyezik a nyilvántartásunkkal. Kérjük, próbálja meg újra, vagy kérjen új kódot.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="countryList">{"DEFAULT":"Country/Region","AF":"Afghanistan","AX":"Åland Islands","AL":"Albania","DZ":"Algeria","AS":"American Samoa","AD":"Andorra","AO":"Angola","AI":"Anguilla","AQ":"Antarctica","AG":"Antigua and Barbuda","AR":"Argentina","AM":"Armenia","AW":"Aruba","AU":"Australia","AT":"Austria","AZ":"Azerbaijan","BS":"Bahamas","BH":"Bahrain","BD":"Bangladesh","BB":"Barbados","BY":"Belarus","BE":"Belgium","BZ":"Belize","BJ":"Benin","BM":"Bermuda","BT":"Bhutan","BO":"Bolivia","BQ":"Bonaire","BA":"Bosnia and Herzegovina","BW":"Botswana","BV":"Bouvet Island","BR":"Brazil","IO":"British Indian Ocean Territory","VG":"British Virgin Islands","BN":"Brunei","BG":"Bulgaria","BF":"Burkina Faso","BI":"Burundi","CV":"Cabo Verde","KH":"Cambodia","CM":"Cameroon","CA":"Canada","KY":"Cayman Islands","CF":"Central African Republic","TD":"Chad","CL":"Chile","CN":"China","CX":"Christmas Island","CC":"Cocos (Keeling) Islands","CO":"Colombia","KM":"Comoros","CG":"Congo","CD":"Congo (DRC)","CK":"Cook Islands","CR":"Costa Rica","CI":"Côte d'Ivoire","HR":"Croatia","CU":"Cuba","CW":"Curaçao","CY":"Cyprus","CZ":"Czech Republic","DK":"Denmark","DJ":"Djibouti","DM":"Dominica","DO":"Dominican Republic","EC":"Ecuador","EG":"Egypt","SV":"El Salvador","GQ":"Equatorial Guinea","ER":"Eritrea","EE":"Estonia","ET":"Ethiopia","FK":"Falkland Islands","FO":"Faroe Islands","FJ":"Fiji","FI":"Finland","FR":"France","GF":"French Guiana","PF":"French Polynesia","TF":"French Southern Territories","GA":"Gabon","GM":"Gambia","GE":"Georgia","DE":"Germany","GH":"Ghana","GI":"Gibraltar","GR":"Greece","GL":"Greenland","GD":"Grenada","GP":"Guadeloupe","GU":"Guam","GT":"Guatemala","GG":"Guernsey","GN":"Guinea","GW":"Guinea-Bissau","GY":"Guyana","HT":"Haiti","HM":"Heard Island and McDonald Islands","HN":"Honduras","HK":"Hong Kong SAR","HU":"Hungary","IS":"Iceland","IN":"India","ID":"Indonesia","IR":"Iran","IQ":"Iraq","IE":"Ireland","IM":"Isle of Man","IL":"Israel","IT":"Italy","JM":"Jamaica","JP":"Japan","JE":"Jersey","JO":"Jordan","KZ":"Kazakhstan","KE":"Kenya","KI":"Kiribati","KR":"Korea","KW":"Kuwait","KG":"Kyrgyzstan","LA":"Laos","LV":"Latvia","LB":"Lebanon","LS":"Lesotho","LR":"Liberia","LY":"Libya","LI":"Liechtenstein","LT":"Lithuania","LU":"Luxembourg","MO":"Macao SAR","MK":"North Macedonia","MG":"Madagascar","MW":"Malawi","MY":"Malaysia","MV":"Maldives","ML":"Mali","MT":"Malta","MH":"Marshall Islands","MQ":"Martinique","MR":"Mauritania","MU":"Mauritius","YT":"Mayotte","MX":"Mexico","FM":"Micronesia","MD":"Moldova","MC":"Monaco","MN":"Mongolia","ME":"Montenegro","MS":"Montserrat","MA":"Morocco","MZ":"Mozambique","MM":"Myanmar","NA":"Namibia","NR":"Nauru","NP":"Nepal","NL":"Netherlands","NC":"New Caledonia","NZ":"New Zealand","NI":"Nicaragua","NE":"Niger","NG":"Nigeria","NU":"Niue","NF":"Norfolk Island","KP":"North Korea","MP":"Northern Mariana Islands","NO":"Norway","OM":"Oman","PK":"Pakistan","PW":"Palau","PS":"Palestinian Authority","PA":"Panama","PG":"Papua New Guinea","PY":"Paraguay","PE":"Peru","PH":"Philippines","PN":"Pitcairn Islands","PL":"Poland","PT":"Portugal","PR":"Puerto Rico","QA":"Qatar","RE":"Réunion","RO":"Romania","RU":"Russia","RW":"Rwanda","BL":"Saint Barthélemy","KN":"Saint Kitts and Nevis","LC":"Saint Lucia","MF":"Saint Martin","PM":"Saint Pierre and Miquelon","VC":"Saint Vincent and the Grenadines","WS":"Samoa","SM":"San Marino","ST":"São Tomé and Príncipe","SA":"Saudi Arabia","SN":"Senegal","RS":"Serbia","SC":"Seychelles","SL":"Sierra Leone","SG":"Singapore","SX":"Sint Maarten","SK":"Slovakia","SI":"Slovenia","SB":"Solomon Islands","SO":"Somalia","ZA":"South Africa","GS":"South Georgia and South Sandwich Islands","SS":"South Sudan","ES":"Spain","LK":"Sri Lanka","SH":"St Helena, Ascension, Tristan da Cunha","SD":"Sudan","SR":"Suriname","SJ":"Svalbard","SZ":"Swaziland","SE":"Sweden","CH":"Switzerland","SY":"Syria","TW":"Taiwan","TJ":"Tajikistan","TZ":"Tanzania","TH":"Thailand","TL":"Timor-Leste","TG":"Togo","TK":"Tokelau","TO":"Tonga","TT":"Trinidad and Tobago","TN":"Tunisia","TR":"Turkey","TM":"Turkmenistan","TC":"Turks and Caicos Islands","TV":"Tuvalu","UM":"U.S. Outlying Islands","VI":"U.S. Virgin Islands","UG":"Uganda","UA":"Ukraine","AE":"United Arab Emirates","GB":"United Kingdom","US":"United States","UY":"Uruguay","UZ":"Uzbekistan","VU":"Vanuatu","VA":"Vatican City","VE":"Venezuela","VN":"Vietnam","WF":"Wallis and Futuna","YE":"Yemen","ZM":"Zambia","ZW":"Zimbabwe"}</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_448">Az Ön által megadott telefonszám nem elérhető.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="error_449">A felhasználó túllépte az újbóli próbálkozások számát.</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="verification_code_input_placeholder_text">Ellenőrző kód</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="strongAuthenticationPhoneNumber" StringId="DisplayName">Telefonszám</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+      <!-- Add more languages here -->
+    </Localization>
+  </BuildingBlocks>
+</TrustFrameworkPolicy>
