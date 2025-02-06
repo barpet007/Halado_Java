@@ -13,7 +13,7 @@
     </ClaimsSchema>
   </BuildingBlocks>
   <RelyingParty>
-    <DefaultUserJourney ReferenceId="SignUpOrSignInClient" />
+    <DefaultUserJourney ReferenceId="SignUpOrSignIn" />
     <Endpoints>
       <!--points to refresh token journey when app makes refresh token request-->
       <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
@@ -25,13 +25,8 @@
         <OutputClaim ClaimTypeReferenceId="displayName" />
         <OutputClaim ClaimTypeReferenceId="givenName" />
         <OutputClaim ClaimTypeReferenceId="surname" />
-        <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
-        <OutputClaim ClaimTypeReferenceId="jobTitle" PartnerClaimType="jobTitle" DefaultValue="lead" AlwaysUseDefaultValue="true" />
-        <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" PartnerClaimType="phone_number" />
-        <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
+        <OutputClaim ClaimTypeReferenceId="email" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
-        <OutputClaim ClaimTypeReferenceId="TnCs" />
-        <OutputClaim ClaimTypeReferenceId="TnCs1" />
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />

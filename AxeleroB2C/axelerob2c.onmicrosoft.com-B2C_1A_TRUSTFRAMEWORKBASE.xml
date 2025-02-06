@@ -353,6 +353,16 @@
         <DataType>boolean</DataType>
       </ClaimType>
 
+      <ClaimType Id="isEmailVerified">
+        <DisplayName>Email Verified</DisplayName>
+        <DataType>boolean</DataType>
+        <DefaultPartnerClaimTypes>
+          <Protocol Name="OAuth2" PartnerClaimType="email_verified" />
+          <Protocol Name="OpenIdConnect" PartnerClaimType="email_verified" />
+        </DefaultPartnerClaimTypes>
+        <UserHelpText>Flag indicating if the email is verified.</UserHelpText>
+      </ClaimType>
+
     </ClaimsSchema>
 
     <ClaimsTransformations>
@@ -941,6 +951,37 @@
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWritePasswordUsingObjectId" />
           </ValidationTechnicalProfiles>
+        </TechnicalProfile>
+        <TechnicalProfile Id="SelfAsserted-LocalAccountSignUpWithEmail">
+          <DisplayName>Local Account SignUp</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="IpAddressClaimReferenceId">IpAddress</Item>
+            <Item Key="ContentDefinitionReferenceId">api.localaccountsignup</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" />
+          </InputClaims>
+          <DisplayClaims>
+            <DisplayClaim ClaimTypeReferenceId="email" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="givenName" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="surname" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="newPassword" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="reenterPassword" Required="true" />
+          </DisplayClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="email" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="givenName" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="surname" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="newUser" PartnerClaimType="newClaimsPrincipalCreated" />
+          </OutputClaims>
+          <ValidationTechnicalProfiles>
+            <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />
+          </ValidationTechnicalProfiles>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>

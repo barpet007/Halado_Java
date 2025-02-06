@@ -142,6 +142,38 @@
       </TechnicalProfiles>
     </ClaimsProvider>
   </ClaimsProviders>
+  <ClaimsTransformations>
+    <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
+      <InputClaims>
+        <InputClaim ClaimTypeReferenceId="objectId" TransformationClaimType="inputClaim" />
+      </InputClaims>
+      <InputParameters>
+        <InputParameter Id="stringFormat" DataType="string" Value="{0}@{RelyingPartyTenantId}" />
+      </InputParameters>
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="userIdForMFA" TransformationClaimType="outputClaim" />
+      </OutputClaims>
+    </ClaimsTransformation>
+    <ClaimsTransformation Id="AssertAccountEnabledIsTrue" TransformationMethod="AssertBooleanClaimIsEqualToValue">
+      <InputClaims>
+        <InputClaim ClaimTypeReferenceId="accountEnabled" TransformationClaimType="inputClaim" />
+      </InputClaims>
+      <InputParameters>
+        <InputParameter Id="valueToCompareTo" DataType="boolean" Value="true" />
+      </InputParameters>
+    </ClaimsTransformation>
+    <ClaimsTransformation Id="AssertRefreshTokenIssuedLaterThanValidFromDate" TransformationMethod="AssertDateTimeIsGreaterThan">
+      <InputClaims>
+        <InputClaim ClaimTypeReferenceId="refreshTokenIssuedOnDateTime" TransformationClaimType="leftOperand" />
+        <InputClaim ClaimTypeReferenceId="refreshTokensValidFromDateTime" TransformationClaimType="rightOperand" />
+      </InputClaims>
+      <InputParameters>
+        <InputParameter Id="AssertIfEqualTo" DataType="boolean" Value="false" />
+        <InputParameter Id="AssertIfRightOperandIsNotPresent" DataType="boolean" Value="true" />
+        <InputParameter Id="TreatAsEqualIfWithinMillseconds" DataType="int" Value="300000" />
+      </InputParameters>
+    </ClaimsTransformation>
+  </ClaimsTransformations>
   <UserJourneys>
     <UserJourney Id="SignUpOrSignInClient">
       <OrchestrationSteps>
@@ -206,6 +238,36 @@
         </OrchestrationStep>
         <!-- This step reads any user attributes that we may not have received when in the token. -->
         <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
+    <UserJourney Id="SignUpOrSignIn">
+      <OrchestrationSteps>
+        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+          <ClaimsProviderSelections>
+            <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
+          </ClaimsProviderSelections>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignUpWithEmail" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <OrchestrationStep Order="4" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
     </UserJourney>
