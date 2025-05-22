@@ -1,0 +1,108 @@
+{
+  "info": {
+    "_postman_id": "12345678-1234-1234-1234-123456789012",
+    "name": "Spring MVC App",
+    "description": "Postman collection for testing the Spring MVC application.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create [Entity]",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"field1\": \"value1\",\n    \"field2\": \"value2\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/[entity]",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "[entity]"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update [Entity]",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"field1\": \"newValue1\",\n    \"field2\": \"newValue2\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/[entity]/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "[entity]", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete [Entity]",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/[entity]/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "[entity]", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All [Entities]",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/[entity]",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "[entity]"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get [Entity] by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/[entity]/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "[entity]", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filter [Entities]",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/[entity]?filter=value",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "[entity]"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "value"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
