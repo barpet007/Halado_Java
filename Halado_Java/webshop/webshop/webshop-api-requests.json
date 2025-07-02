@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+		"name": "Webshop API Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_collection_link": "https://www.postman.com/collections/a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
+	},
+	"item": [
+		{
+			"name": "1. Create Brand",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Samsung\",\n    \"countryOfOrigin\": \"South Korea\",\n    \"establishmentDate\": \"1938-03-01\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/brands",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"brands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get All Brands",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/brands",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"brands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Get Brands by Partial Name (Filter)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/brands?name=Sam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"brands"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Sam"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Update Brand (ID: 1)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Samsung Electronics\",\n    \"countryOfOrigin\": \"South Korea\",\n    \"establishmentDate\": \"1938-03-01\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/brands/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"brands",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Create Supplier",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Tech Distributors Inc.\",\n    \"address\": \"123 Main St, Anytown\",\n    \"contactEmail\": \"sales@techdist.com\",\n    \"establishmentYear\": 1995\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/suppliers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"suppliers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Create Category",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Electronics\",\n    \"description\": \"Elektronikai eszközök és kiegészítők\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Create Product (needs Brand ID 1, Supplier ID 1, Category ID 1)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Samsung Galaxy S24\",\n    \"description\": \"A legújabb okostelefon a Samsungtól.\",\n    \"releaseYear\": 2024,\n    \"price\": 899.99,\n    \"stockQuantity\": 500,\n    \"brandId\": 1,\n    \"supplierId\": 1,\n    \"categoryIds\": [1]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Get All Products (Filter by Category)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products?categoryName=Electronics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					],
+					"query": [
+						{
+							"key": "categoryName",
+							"value": "Electronics"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Delete Product (ID: 1)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
