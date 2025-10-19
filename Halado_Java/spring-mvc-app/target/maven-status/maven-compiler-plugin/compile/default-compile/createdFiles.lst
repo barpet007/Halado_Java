@@ -1,2 +1,3 @@
 com\example\springmvcapp\dto\UserDTO.class
+com\example\springmvcapp\SpringMvcAppApplication.class
 com\example\springmvcapp\model\User.class
