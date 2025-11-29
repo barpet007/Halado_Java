@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Márkák üzleti logikáját kezelő szolgáltatás.
@@ -39,12 +40,13 @@ public class BrandService {
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public BrandDTO createBrand(BrandDTO brandDTO) {
         if (brandRepository.findByNameIgnoreCase(brandDTO.getName()).isPresent()) {
             throw new DuplicateResourceException("Márka ezzel a névvel '" + brandDTO.getName() + "' már létezik.");
         }
         var brand = convertToEntity(brandDTO);
-        var savedBrand = brandRepository.save(brand);
+        var savedBrand = Objects.requireNonNull(brandRepository.save(brand));
         return convertToDto(savedBrand);
     }
 

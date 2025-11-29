@@ -1,5 +1,7 @@
 package com.rvque9.webshop.webshop.service;
 
+import java.util.Objects;
+
 import com.rvque9.webshop.webshop.dto.CategoryDTO;
 import com.rvque9.webshop.webshop.exception.ResourceNotFoundException;
 import com.rvque9.webshop.webshop.exception.DuplicateResourceException;
@@ -39,12 +41,13 @@ public class CategoryService {
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         if (categoryRepository.findByNameIgnoreCase(categoryDTO.getName()).isPresent()) {
             throw new DuplicateResourceException("Kategória ezzel a névvel '" + categoryDTO.getName() + "' már létezik.");
         }
         var category = convertToEntity(categoryDTO);
-        var savedCategory = categoryRepository.save(category);
+        var savedCategory = Objects.requireNonNull(categoryRepository.save(category));
         return convertToDto(savedCategory);
     }
 

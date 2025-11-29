@@ -1,6 +1,5 @@
 package com.rvque9.webshop.webshop.repository;
 
-import com.rvque9.webshop.webshop.model.Category;
 import com.rvque9.webshop.webshop.model.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
