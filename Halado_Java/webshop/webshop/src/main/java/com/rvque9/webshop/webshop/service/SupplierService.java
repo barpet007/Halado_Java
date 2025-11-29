@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 /**
  * Beszállítók üzleti logikáját kezelő szolgáltatás.
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class SupplierService {
 
+    private static final String SUPPLIER_ID_NULL_MSG = "Supplier ID cannot be null";
     private final SupplierRepository supplierRepository;
 
     @Autowired
@@ -30,29 +31,32 @@ public class SupplierService {
     public List<SupplierDTO> getAllSuppliers() {
         return supplierRepository.findAll().stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public SupplierDTO getSupplierById(Long id) {
-        Supplier supplier = supplierRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + id));
+        Long supplierId = Objects.requireNonNull(id, SUPPLIER_ID_NULL_MSG);
+        Supplier supplier = supplierRepository.findById(supplierId)
+                .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + supplierId));
         return convertToDto(supplier);
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public SupplierDTO createSupplier(SupplierDTO supplierDTO) {
         if (supplierRepository.findByNameIgnoreCase(supplierDTO.getName()).isPresent()) {
             throw new DuplicateResourceException("Beszállító ezzel a névvel '" + supplierDTO.getName() + "' már létezik.");
         }
         Supplier supplier = convertToEntity(supplierDTO);
-        Supplier savedSupplier = supplierRepository.save(supplier);
+        Supplier savedSupplier = Objects.requireNonNull(supplierRepository.save(supplier));
         return convertToDto(savedSupplier);
     }
 
     @Transactional
     public SupplierDTO updateSupplier(Long id, SupplierDTO supplierDTO) {
-        Supplier existingSupplier = supplierRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + id));
+        Long supplierId = Objects.requireNonNull(id, SUPPLIER_ID_NULL_MSG);
+        Supplier existingSupplier = supplierRepository.findById(supplierId)
+                .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + supplierId));
 
         existingSupplier.setName(supplierDTO.getName());
         existingSupplier.setAddress(supplierDTO.getAddress());
@@ -65,10 +69,11 @@ public class SupplierService {
 
     @Transactional
     public void deleteSupplier(Long id) {
-        if (!supplierRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + id);
+        Long supplierId = Objects.requireNonNull(id, SUPPLIER_ID_NULL_MSG);
+        if (!supplierRepository.existsById(supplierId)) {
+            throw new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + supplierId);
         }
-        supplierRepository.deleteById(id);
+        supplierRepository.deleteById(supplierId);
     }
 
     public List<SupplierDTO> searchSuppliers(String name, String address, Integer establishmentYear) {
@@ -84,7 +89,7 @@ public class SupplierService {
         }
         return suppliers.stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private SupplierDTO convertToDto(Supplier supplier) {
@@ -95,7 +100,7 @@ public class SupplierService {
         dto.setContactEmail(supplier.getContactEmail());
         dto.setEstablishmentYear(supplier.getEstablishmentYear());
         if (supplier.getSuppliedProducts() != null) {
-            dto.setSuppliedProductIds(supplier.getSuppliedProducts().stream().map(Product::getId).collect(Collectors.toList()));
+            dto.setSuppliedProductIds(supplier.getSuppliedProducts().stream().map(Product::getId).toList());
         }
         return dto;
     }

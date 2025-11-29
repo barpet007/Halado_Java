@@ -3,17 +3,15 @@ package com.rvque9.webshop.webshop.service;
 import com.rvque9.webshop.webshop.dto.BrandDTO;
 import com.rvque9.webshop.webshop.exception.ResourceNotFoundException;
 import com.rvque9.webshop.webshop.exception.DuplicateResourceException;
-import com.rvque9.webshop.webshop.model.Brand;
 import com.rvque9.webshop.webshop.model.Product;
 import com.rvque9.webshop.webshop.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Márkák üzleti logikáját kezelő szolgáltatás.
@@ -31,11 +29,11 @@ public class BrandService {
     public List<BrandDTO> getAllBrands() {
         return brandRepository.findAll().stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    public BrandDTO getBrandById(Long id) {
-        Brand brand = brandRepository.findById(id)
+    public BrandDTO getBrandById(@NonNull Long id) {
+        var brand = brandRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Márka nem található ezzel az ID-val: " + id));
         return convertToDto(brand);
     }
@@ -45,26 +43,26 @@ public class BrandService {
         if (brandRepository.findByNameIgnoreCase(brandDTO.getName()).isPresent()) {
             throw new DuplicateResourceException("Márka ezzel a névvel '" + brandDTO.getName() + "' már létezik.");
         }
-        Brand brand = convertToEntity(brandDTO);
-        Brand savedBrand = brandRepository.save(brand);
+        var brand = convertToEntity(brandDTO);
+        var savedBrand = brandRepository.save(brand);
         return convertToDto(savedBrand);
     }
 
     @Transactional
-    public BrandDTO updateBrand(Long id, BrandDTO brandDTO) {
-        Brand existingBrand = brandRepository.findById(id)
+    public BrandDTO updateBrand(@NonNull Long id, BrandDTO brandDTO) {
+        var existingBrand = brandRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Márka nem található ezzel az ID-val: " + id));
 
         existingBrand.setName(brandDTO.getName());
         existingBrand.setCountryOfOrigin(brandDTO.getCountryOfOrigin());
         existingBrand.setEstablishmentDate(brandDTO.getEstablishmentDate());
 
-        Brand updatedBrand = brandRepository.save(existingBrand);
+        var updatedBrand = brandRepository.save(existingBrand);
         return convertToDto(updatedBrand);
     }
 
     @Transactional
-    public void deleteBrand(Long id) {
+    public void deleteBrand(@NonNull Long id) {
         if (!brandRepository.existsById(id)) {
             throw new ResourceNotFoundException("Márka nem található ezzel az ID-val: " + id);
         }
@@ -72,7 +70,7 @@ public class BrandService {
     }
 
     public List<BrandDTO> searchBrands(String name, String countryOfOrigin, LocalDate minEstablishmentDate) {
-        List<Brand> brands;
+        List<com.rvque9.webshop.webshop.model.Brand> brands;
         if (name != null && !name.isEmpty()) {
             brands = brandRepository.findByNameContainingIgnoreCase(name);
         } else if (countryOfOrigin != null && !countryOfOrigin.isEmpty()) {
@@ -84,23 +82,23 @@ public class BrandService {
         }
         return brands.stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    private BrandDTO convertToDto(Brand brand) {
-        BrandDTO dto = new BrandDTO();
+    private BrandDTO convertToDto(com.rvque9.webshop.webshop.model.Brand brand) {
+        var dto = new BrandDTO();
         dto.setId(brand.getId());
         dto.setName(brand.getName());
         dto.setCountryOfOrigin(brand.getCountryOfOrigin());
         dto.setEstablishmentDate(brand.getEstablishmentDate());
         if (brand.getProducts() != null) {
-            dto.setProductIds(brand.getProducts().stream().map(Product::getId).collect(Collectors.toList()));
+            dto.setProductIds(brand.getProducts().stream().map(Product::getId).toList());
         }
         return dto;
     }
 
-    private Brand convertToEntity(BrandDTO brandDTO) {
-        Brand brand = new Brand();
+    private com.rvque9.webshop.webshop.model.Brand convertToEntity(BrandDTO brandDTO) {
+        var brand = new com.rvque9.webshop.webshop.model.Brand();
         if (brandDTO.getId() != null) {
             brand.setId(brandDTO.getId());
         }

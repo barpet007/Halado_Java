@@ -2,7 +2,6 @@ package com.rvque9.webshop.webshop.service;
 
 import com.rvque9.webshop.webshop.dto.ProductDTO;
 import com.rvque9.webshop.webshop.exception.ResourceNotFoundException;
-import com.rvque9.webshop.webshop.model.Brand;
 import com.rvque9.webshop.webshop.model.Category;
 import com.rvque9.webshop.webshop.model.Product;
 import com.rvque9.webshop.webshop.model.Supplier;
@@ -11,6 +10,7 @@ import com.rvque9.webshop.webshop.repository.CategoryRepository;
 import com.rvque9.webshop.webshop.repository.ProductRepository;
 import com.rvque9.webshop.webshop.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +18,8 @@ import java.math.BigDecimal;
 import java.time.Year;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Termékek üzleti logikáját kezelő szolgáltatás. Korábbi neve: BookService.
@@ -44,25 +44,26 @@ public class ProductService {
     public List<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    public ProductDTO getProductById(Long id) {
-        Product product = productRepository.findById(id)
+    public ProductDTO getProductById(@NonNull Long id) {
+        var product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Termék nem található ezzel az ID-val: " + id));
         return convertToDto(product);
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public ProductDTO createProduct(ProductDTO productDTO) {
-        Product product = convertToEntity(productDTO);
-        Product savedProduct = productRepository.save(product);
+        var product = convertToEntity(productDTO);
+        Product savedProduct = Objects.requireNonNull(productRepository.save(product));
         return convertToDto(savedProduct);
     }
 
     @Transactional
-    public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
-        Product existingProduct = productRepository.findById(id)
+    public ProductDTO updateProduct(@NonNull Long id, ProductDTO productDTO) {
+        var existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Termék nem található ezzel az ID-val: " + id));
 
         existingProduct.setName(productDTO.getName());
@@ -73,16 +74,18 @@ public class ProductService {
 
         // Kapcsolatok frissítése
         if (productDTO.getBrandId() != null) {
-            Brand brand = brandRepository.findById(productDTO.getBrandId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Márka nem található ezzel az ID-val: " + productDTO.getBrandId()));
+            Long brandId = Objects.requireNonNull(productDTO.getBrandId());
+            var brand = brandRepository.findById(brandId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Márka nem található ezzel az ID-val: " + brandId));
             existingProduct.setBrand(brand);
         } else {
             existingProduct.setBrand(null); // Kapcsolat bontása
         }
 
         if (productDTO.getSupplierId() != null) {
-            Supplier supplier = supplierRepository.findById(productDTO.getSupplierId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + productDTO.getSupplierId()));
+            Long supplierId = Objects.requireNonNull(productDTO.getSupplierId());
+            Supplier supplier = supplierRepository.findById(supplierId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + supplierId));
             existingProduct.setSupplier(supplier);
         } else {
             existingProduct.setSupplier(null); // Kapcsolat bontása
@@ -91,8 +94,9 @@ public class ProductService {
         if (productDTO.getCategoryIds() != null && !productDTO.getCategoryIds().isEmpty()) {
             Set<Category> categories = new HashSet<>();
             for (Long categoryId : productDTO.getCategoryIds()) {
-                Category category = categoryRepository.findById(categoryId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Kategória nem található ezzel az ID-val: " + categoryId));
+                Long catId = Objects.requireNonNull(categoryId, "Category ID cannot be null");
+                var category = categoryRepository.findById(catId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Kategória nem található ezzel az ID-val: " + catId));
                 categories.add(category);
             }
             existingProduct.setCategories(categories);
@@ -100,12 +104,12 @@ public class ProductService {
             existingProduct.setCategories(new HashSet<>()); // Kategóriák törlése
         }
 
-        Product updatedProduct = productRepository.save(existingProduct);
+        var updatedProduct = productRepository.save(existingProduct);
         return convertToDto(updatedProduct);
     }
 
     @Transactional
-    public void deleteProduct(Long id) {
+    public void deleteProduct(@NonNull Long id) {
         if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("Termék nem található ezzel az ID-val: " + id);
         }
@@ -125,18 +129,18 @@ public class ProductService {
             // Itt szükség lehet egy @Query annotációra vagy stream szűrésre
             products = productRepository.findAll().stream()
                     .filter(p -> p.getCategories().stream().anyMatch(c -> c.getName().equalsIgnoreCase(categoryName)))
-                    .collect(Collectors.toList());
+                    .toList();
         }
         else {
             products = productRepository.findAll();
         }
         return products.stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private ProductDTO convertToDto(Product product) {
-        ProductDTO dto = new ProductDTO();
+        var dto = new ProductDTO();
         dto.setId(product.getId());
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
@@ -152,14 +156,14 @@ public class ProductService {
             dto.setSupplierName(product.getSupplier().getName());
         }
         if (product.getCategories() != null) {
-            dto.setCategoryIds(product.getCategories().stream().map(Category::getId).collect(Collectors.toList()));
-            dto.setCategoryNames(product.getCategories().stream().map(Category::getName).collect(Collectors.toList()));
+            dto.setCategoryIds(product.getCategories().stream().map(Category::getId).toList());
+            dto.setCategoryNames(product.getCategories().stream().map(Category::getName).toList());
         }
         return dto;
     }
 
     private Product convertToEntity(ProductDTO productDTO) {
-        Product product = new Product();
+        var product = new Product();
         if (productDTO.getId() != null) {
             product.setId(productDTO.getId());
         }
@@ -170,22 +174,25 @@ public class ProductService {
         product.setStockQuantity(productDTO.getStockQuantity());
 
         if (productDTO.getBrandId() != null) {
-            Brand brand = brandRepository.findById(productDTO.getBrandId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Márka nem található ezzel az ID-val: " + productDTO.getBrandId()));
+            Long brandId = Objects.requireNonNull(productDTO.getBrandId());
+            var brand = brandRepository.findById(brandId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Márka nem található ezzel az ID-val: " + brandId));
             product.setBrand(brand);
         }
 
         if (productDTO.getSupplierId() != null) {
-            Supplier supplier = supplierRepository.findById(productDTO.getSupplierId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + productDTO.getSupplierId()));
+            Long supplierId = Objects.requireNonNull(productDTO.getSupplierId());
+            var supplier = supplierRepository.findById(supplierId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Beszállító nem található ezzel az ID-val: " + supplierId));
             product.setSupplier(supplier);
         }
 
         if (productDTO.getCategoryIds() != null && !productDTO.getCategoryIds().isEmpty()) {
             Set<Category> categories = new HashSet<>();
             for (Long categoryId : productDTO.getCategoryIds()) {
-                Category category = categoryRepository.findById(categoryId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Kategória nem található ezzel az ID-val: " + categoryId));
+                Long catId = Objects.requireNonNull(categoryId, "Category ID cannot be null");
+                var category = categoryRepository.findById(catId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Kategória nem található ezzel az ID-val: " + catId));
                 categories.add(category);
             }
             product.setCategories(categories);

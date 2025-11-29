@@ -5,6 +5,7 @@ import com.rvque9.webshop.webshop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class CategoryController {
      * GET /api/categories/{id}
      */
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable @NonNull Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
@@ -53,7 +54,7 @@ public class CategoryController {
      */
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
-        CategoryDTO createdCategory = categoryService.createCategory(categoryDTO);
+        var createdCategory = categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
 
@@ -62,8 +63,8 @@ public class CategoryController {
      * PUT /api/categories/{id}
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
-        CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDTO);
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable @NonNull Long id, @RequestBody CategoryDTO categoryDTO) {
+        var updatedCategory = categoryService.updateCategory(id, categoryDTO);
         return ResponseEntity.ok(updatedCategory);
     }
 
@@ -72,7 +73,7 @@ public class CategoryController {
      * DELETE /api/categories/{id}
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable @NonNull Long id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }

@@ -5,6 +5,7 @@ import com.rvque9.webshop.webshop.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -46,7 +47,7 @@ public class BrandController {
      * GET /api/brands/{id}
      */
     @GetMapping("/{id}")
-    public ResponseEntity<BrandDTO> getBrandById(@PathVariable Long id) {
+    public ResponseEntity<BrandDTO> getBrandById(@PathVariable @NonNull Long id) {
         return ResponseEntity.ok(brandService.getBrandById(id));
     }
 
@@ -56,7 +57,7 @@ public class BrandController {
      */
     @PostMapping
     public ResponseEntity<BrandDTO> createBrand(@RequestBody BrandDTO brandDTO) {
-        BrandDTO createdBrand = brandService.createBrand(brandDTO);
+        var createdBrand = brandService.createBrand(brandDTO);
         return new ResponseEntity<>(createdBrand, HttpStatus.CREATED);
     }
 
@@ -65,8 +66,8 @@ public class BrandController {
      * PUT /api/brands/{id}
      */
     @PutMapping("/{id}")
-    public ResponseEntity<BrandDTO> updateBrand(@PathVariable Long id, @RequestBody BrandDTO brandDTO) {
-        BrandDTO updatedBrand = brandService.updateBrand(id, brandDTO);
+    public ResponseEntity<BrandDTO> updateBrand(@PathVariable @NonNull Long id, @RequestBody BrandDTO brandDTO) {
+        var updatedBrand = brandService.updateBrand(id, brandDTO);
         return ResponseEntity.ok(updatedBrand);
     }
 
@@ -75,7 +76,7 @@ public class BrandController {
      * DELETE /api/brands/{id}
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBrand(@PathVariable @NonNull Long id) {
         brandService.deleteBrand(id);
         return ResponseEntity.noContent().build();
     }
